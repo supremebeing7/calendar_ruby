@@ -62,26 +62,24 @@ end
 
 def main_menu
   ascii_art
-  choice = nil
-  until choice == 'x'
-    puts "\nMAIN MENU"
-    puts "============"
-    puts "\nPress 'E' for the event menu"
-    puts "Press 'T' for the to-do menu"
-    puts "Press 'S' to search"
-    puts "Press 'X' to exit"
-    choice = gets.chomp.downcase
-    case choice
-    when 'e'
-      event_menu
-    when 't'
-      to_do_menu
-    when 's'
-      search
-    when 'x'
-      puts "Goodbye!"
-    end
-  end
+  Shoes.app {
+    background white
+    title "Main Menu"
+    stack(margin: 6) {
+      @event = button "Event Menu"
+      @event.click {
+        event_menu
+      }
+      @to_do = button "To-Do Menu"
+      @to_do.click {
+        to_do_menu
+      }
+      @search = button "Search"
+      @search.click {
+        search
+      }
+    }
+  }
 end
 
 def search

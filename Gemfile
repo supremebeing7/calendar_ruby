@@ -7,6 +7,7 @@ gem 'activerecord'
 gem 'rubocop', require: false
 gem 'validates_timeliness', '~> 3.0'
 gem 'textacular', '~> 3.0'
+gem 'green_shoes'
 
 
 group :test do
