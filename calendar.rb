@@ -62,40 +62,50 @@ end
 
 def main_menu
   ascii_art
-  Shoes.app {
+  Shoes.app do
     background white
     title "Main Menu"
-    stack(margin: 6) {
+    stack(margin: 6) do
       @event = button "Event Menu"
-      @event.click {
+      @event.click do
         event_menu
-      }
+      end
       @to_do = button "To-Do Menu"
-      @to_do.click {
+      @to_do.click do
         to_do_menu
-      }
+      end
       @search = button "Search"
-      @search.click {
+      @search.click do
         search
-      }
-    }
-  }
+      end
+    end
+  end
 end
 
 def search
-  puts "Enter your search term(s):"
-  search = gets.chomp
-  events = Event.basic_search(:description => search)
-  puts "\nFound #{events.count} event(s):"
-  events.each_with_index do |event, index|
-    puts "#{index + 1}. #{event.description}"
-    event.notes.each { |note| puts "- #{note.description}" }
-  end
-  to_dos = To_do.basic_search(:description => search)
-  puts "\nFound #{to_dos.count} to-do(s):"
-  to_dos.each_with_index do |to_do, index|
-    puts "#{index + 1}. #{to_do.description}"
-    to_do.notes.each { |note| puts "- #{note.description}" }
+  Shoes.app do
+    background white
+    flow do
+      edit_line do |e|
+        @search_term = e.text
+      end
+      @searching = button "Search"
+      @searching.click do
+        para "Results of search for '#{@search_term}':"
+        events = Event.basic_search(:description => @search_term)
+        para "#{events.count} event(s) found"
+        events.each_with_index do |event, index|
+          para "#{index + 1}. #{event.description}"
+          event.notes.each { |note| para "- #{note.description}" }
+        end
+        to_dos = To_do.basic_search(:description => @search_term)
+        para "#{to_dos.count} to-do(s) found"
+        to_dos.each_with_index do |to_do, index|
+          para "#{index + 1}. #{to_do.description}"
+          to_do.notes.each { |note| para "- #{note.description}" }
+        end
+      end
+    end
   end
 end
 
