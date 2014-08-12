@@ -82,9 +82,92 @@ def main_menu
   end
 end
 
+def event_menu
+  Shoes.app do
+    background white
+    title "Event Menu"
+    stack(margin: 6) do
+      @add_event = button "Add Event"
+      @add_event.click do
+        # event_saved = nil
+        # until event_saved != nil
+          para "Please enter the description of your event"
+          edit_line do |e|
+            @description_input = e.text
+          end
+          para "Please enter the location of your event"
+          edit_line do |e|
+            @location_input = e.text
+          end
+          para "Please enter the start date of your event (e.g. April 21, 1992)"
+          edit_line do |e|
+            @start_input = e.text
+          end
+          para "Please enter the end date of your event (e.g. April 21, 1992)"
+          edit_line do |e|
+            @end_input = e.text
+          end
+          @submit = button "Submit"
+          @submit.click do
+            @event = Event.create(:description => @description_input, :location => @location_input)
+            occurance = Occurance.new(:start => @start_input, :end => @end_input, :event_id => @event.id)
+            if occurance.save
+              para "Congratulations! You have successfully added the event: #{@event.description}"
+              para "At the following time: #{occurance.start.strftime("%l:%M%p %m/%d/%Y")} until #{occurance.end.strftime("%l:%M%p %m/%d/%Y")}"
+              # event_saved = true
+            else
+              para "Try again, bum!"
+              para occurance.errors
+            end
+          end
+        # end
+      end
+
+      @edit_event = button "Edit Event"
+      @edit_event.click do
+        # to_do_menu
+      end
+      @view_event = button "View Event"
+      @view_event.click do
+        # search
+      end
+    end
+  end
+  # system "clear"
+  # choice = nil
+  # until choice == 'M'
+  #   puts "\nEVENT MENU"
+  #   puts "============"
+  #   puts "Press 'A' to add an event"
+  #   puts "Press 'E' to edit an event"
+  #   puts "Press 'V' to view an event"
+  #   puts "Press 'D' to delete an event"
+  #   puts "Press 'N' to attach a note to an event"
+  #   puts "Press 'M' to return to main menu"
+  #   choice = gets.chomp.upcase
+  #   case choice
+  #   when 'A'
+  #     add_event
+  #   when 'E'
+  #     edit_event
+  #   when 'D'
+  #     delete_event
+  #   when 'V'
+  #     view_event_menu
+  #   when 'N'
+  #     add_note_to_event
+  #   when 'M'
+  #     puts "Returning to main menu...\n\n"
+  #   else
+  #     puts "Invalid selection, jerk!"
+  #   end
+  # end
+end
+
 def search
   Shoes.app do
     background white
+    title "Search Menu"
     flow do
       edit_line do |e|
         @search_term = e.text
@@ -157,37 +240,6 @@ def note_to_do
   puts "Note '#{to_do.notes.last.description}' added to '#{note.notable.description}'"
 end
 
-def event_menu
-  system "clear"
-  choice = nil
-  until choice == 'M'
-    puts "\nEVENT MENU"
-    puts "============"
-    puts "Press 'A' to add an event"
-    puts "Press 'E' to edit an event"
-    puts "Press 'D' to delete an event"
-    puts "Press 'V' to view an event"
-    puts "Press 'N' to attach a note to an event"
-    puts "Press 'M' to return to main menu"
-    choice = gets.chomp.upcase
-    case choice
-    when 'A'
-      add_event
-    when 'E'
-      edit_event
-    when 'D'
-      delete_event
-    when 'V'
-      view_event_menu
-    when 'N'
-      add_note_to_event
-    when 'M'
-      puts "Returning to main menu...\n\n"
-    else
-      puts "Invalid selection, jerk!"
-    end
-  end
-end
 
 def view_event_menu
   puts "\nVIEW EVENT MENU"
