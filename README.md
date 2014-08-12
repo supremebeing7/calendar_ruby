@@ -1,5 +1,7 @@
 # Calendar
 
+### NOTE: Currently using this app as a staging ground for learning [Shoes](http://shoesrb.com/). Latest commits may have broken parts of the app.
+
 ### Usage
 
 Clone the repo.
