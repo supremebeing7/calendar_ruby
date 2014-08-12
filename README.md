@@ -1,4 +1,16 @@
 # Calendar
+
+### Usage
+
+Clone the repo.
+
+Run these commands:
+
+    bundle install
+    rake db:create db:migrate db:test:prepare
+    bundle exec rspec  # ensure all tests pass
+    bundle exec ruby calendar.rb
+
 ### Create a calendar app.
 
 * **DONE** First, let users create, edit, and delete events with a description, location, and a start and end date and time.
